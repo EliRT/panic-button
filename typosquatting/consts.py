@@ -1,6 +1,6 @@
 import os
 
-TOP_ALEXA_URLS = open(os.path.abspath("assets/alexa_top_200.csv"))
+TOP_ALEXA_URLS = open(os.path.abspath("../assets/alexa_top_200.csv"))
 
 KEYBOARD_ADJACENT_CHARS_MAPPING = {
     'a': ['a', 's'],
