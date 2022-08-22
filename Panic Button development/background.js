@@ -11,6 +11,5 @@ function sendTabs(request, sender, sendResponse) {
 }
 
 function closeTab(currTab){               //closes passed tab from query
-  console.log(currTab[0].id);
   chrome.tabs.remove(currTab[0].id);
 }

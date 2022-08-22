@@ -34,15 +34,14 @@ let scamScore = 0.0;
 
 window.onload = isScam();
 function isScam() {                 //calculates page scam score
-    let domain = window.location.hostname;
-    chrome.runtime.sendMessage({ content: domain, msg: "print" });
+    let domain = window.location.hostname;                          //whitelist
     if ((domain == "twitter.com") || domain == "www.omegle.com"){
         return 0;
     }
     
     let docText = allText();
     let max_weight = 0;
-    chrome.runtime.sendMessage({ content: docText, msg: "print" });
+    //chrome.runtime.sendMessage({ content: docText, msg: "print" });
 
     for (let i = 0; i < Object.keys(scoreDict).length; i++) {       //gets sum of scoreDict values for score normalization
         max_weight += scoreDict[Object.keys(scoreDict)[i]];
@@ -56,8 +55,8 @@ function isScam() {                 //calculates page scam score
             let keyWord = Object.keys(scoreDict)[j];
 
             if ((usedScore[j] < 3) && verifyMatch(keyWord, text, text.search(keyWord))) {
-                chrome.runtime.sendMessage({ content: "match is " + keyWord, msg: "print" });
-                chrome.runtime.sendMessage({ content: "usedscore is " + usedScore[j], msg: "print" });
+                //chrome.runtime.sendMessage({ content: "match is " + keyWord, msg: "print" });
+                //chrome.runtime.sendMessage({ content: "usedscore is " + usedScore[j], msg: "print" });
                 usedScore[j]++;
 
                 let new_value = textScore + ((1 / max_weight) * scoreDict[keyWord]);
@@ -68,10 +67,10 @@ function isScam() {                 //calculates page scam score
         scamScore += textScore;
     }
 
-    chrome.runtime.sendMessage({ content: usedScore, msg: "print" });
+    //chrome.runtime.sendMessage({ content: usedScore, msg: "print" });
     scamScore = (scamScore / docText.length);
 
-    chrome.runtime.sendMessage({ content: scamScore, msg: "print" });
+    //chrome.runtime.sendMessage({ content: scamScore, msg: "print" });
 
     if (scamScore * 100 >= 0.4) {                                   //scam score threshold, alerts user with warning popup when passed
         alertUser();
